@@ -79,7 +79,6 @@ EXPORT_SYMBOL(vfs_setpos);
  * Synchronization:
  * SEEK_SET and SEEK_END are unsynchronized (but atomic on 64bit platforms)
  * SEEK_CUR is synchronized against other SEEK_CURs, but not read/writes.
- * read/writes behave like SEEK_SET against seeks.
  */
 loff_t
 generic_file_llseek_size(struct file *file, loff_t offset, int whence,
@@ -92,7 +91,8 @@ generic_file_llseek_size(struct file *file, loff_t offset, int whence,
 	case SEEK_CUR:
 		/*
 		 * Here we special-case the lseek(fd, 0, SEEK_CUR)
-		 * position-querying operation.  Avoid rewriting the "same"
+		 * position-queryin * read/writes behave like SEEK_SET against seeks.
+g operation.  Avoid rewriting the "same"
 		 * f_pos value back to the file because a concurrent read(),
 		 * write() or lseek() might have altered it
 		 */
